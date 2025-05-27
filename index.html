@@ -11,8 +11,62 @@
         }
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f5f5f5;
+        }
+        
+        /* Login Screen Styles */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #2c3e50;
+        }
+        .login-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            width: 350px;
+            text-align: center;
+        }
+        .login-form h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        .login-form button:hover {
+            background-color: #2980b9;
+        }
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Main Content Styles (hidden until login) */
+        .main-content {
+            display: none;
+            padding: 20px;
         }
         .container {
             max-width: 1000px;
@@ -81,6 +135,11 @@
             background-color: #e74c3c;
             color: white;
         }
+        .btn-pdf {
+            background-color: #e74c3c;
+            color: white;
+            margin-left: 10px;
+        }
         .btn:hover {
             opacity: 0.9;
         }
@@ -99,223 +158,294 @@
             }
         }
     </style>
+    <!-- PDF Generation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>MONSEP - Monitoreo y Seguridad Privada</h1>
-        <h2>Control de Equipamiento</h2>
-        
-        <!-- Sección de Check-Out (Entrega) -->
-        <div class="section checkout-section">
-            <h2>CHECK-OUT / ENTREGA DE EQUIPO</h2>
-            <form id="checkoutForm">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Artículo</th>
-                            <th>Entregado</th>
-                            <th>Estado</th>
-                            <th>Observaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Camisa</td>
-                            <td><input type="checkbox" id="camisa-out"></td>
-                            <td>
-                                <select id="camisa-estado-out">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="camisa-obs-out" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Pantalón</td>
-                            <td><input type="checkbox" id="pantalon-out"></td>
-                            <td>
-                                <select id="pantalon-estado-out">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="pantalon-obs-out" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Gorra</td>
-                            <td><input type="checkbox" id="gorra-out"></td>
-                            <td>
-                                <select id="gorra-estado-out">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="gorra-obs-out" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Cubrebocas</td>
-                            <td><input type="checkbox" id="cubrebocas-out"></td>
-                            <td>
-                                <select id="cubrebocas-estado-out">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="cubrebocas-obs-out" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Botas</td>
-                            <td><input type="checkbox" id="botas-out"></td>
-                            <td>
-                                <select id="botas-estado-out">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="botas-obs-out" placeholder="Observaciones"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="personal-info">
-                    <h3>Datos del Personal</h3>
-                    <table>
-                        <tr>
-                            <td>Nombre Completo:</td>
-                            <td colspan="3"><input type="text" id="nombre-out" placeholder="Nombre del empleado" required></td>
-                        </tr>
-                        <tr>
-                            <td>Número de Empleado:</td>
-                            <td><input type="number" id="numero-out" placeholder="Número" required></td>
-                            <td>Contacto:</td>
-                            <td><input type="tel" id="contacto-out" placeholder="Teléfono" required></td>
-                        </tr>
-                        <tr>
-                            <td>Dirección:</td>
-                            <td colspan="3"><input type="text" id="direccion-out" placeholder="Dirección" required></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="action-buttons">
-                    <button type="reset" class="btn btn-danger">Limpiar</button>
-                    <button type="submit" class="btn btn-primary">Registrar Check-Out</button>
-                </div>
-            </form>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-form">
+            <h2>Acceso al Sistema</h2>
+            <input type="text" id="username" placeholder="Usuario" required>
+            <input type="password" id="password" placeholder="Contraseña" required>
+            <button id="loginBtn">Ingresar</button>
+            <div class="error-message" id="errorMessage">
+                Usuario o contraseña incorrectos
+            </div>
         </div>
-        
-        <!-- Sección de Check-In (Devolución) -->
-        <div class="section checkin-section">
-            <h2>CHECK-IN / DEVOLUCIÓN DE EQUIPO</h2>
-            <form id="checkinForm">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Artículo</th>
-                            <th>Devuelto</th>
-                            <th>Estado</th>
-                            <th>Observaciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Camisa</td>
-                            <td><input type="checkbox" id="camisa-in"></td>
-                            <td>
-                                <select id="camisa-estado-in">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="camisa-obs-in" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Pantalón</td>
-                            <td><input type="checkbox" id="pantalon-in"></td>
-                            <td>
-                                <select id="pantalon-estado-in">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="pantalon-obs-in" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Gorra</td>
-                            <td><input type="checkbox" id="gorra-in"></td>
-                            <td>
-                                <select id="gorra-estado-in">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="gorra-obs-in" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Cubrebocas</td>
-                            <td><input type="checkbox" id="cubrebocas-in"></td>
-                            <td>
-                                <select id="cubrebocas-estado-in">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="cubrebocas-obs-in" placeholder="Observaciones"></td>
-                        </tr>
-                        <tr>
-                            <td>Botas</td>
-                            <td><input type="checkbox" id="botas-in"></td>
-                            <td>
-                                <select id="botas-estado-in">
-                                    <option value="bueno">Bueno</option>
-                                    <option value="regular">Regular</option>
-                                    <option value="malo">Malo</option>
-                                </select>
-                            </td>
-                            <td><input type="text" id="botas-obs-in" placeholder="Observaciones"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <div class="personal-info">
-                    <h3>Datos del Personal</h3>
+    </div>
+    
+    <!-- Main Content (hidden until login) -->
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <div style="text-align: right; margin-bottom: 20px;">
+                <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
+            </div>
+            
+            <h1>MONSEP - Monitoreo y Seguridad Privada</h1>
+            <h2>Control de Equipamiento</h2>
+            
+            <!-- PDF Button -->
+            <div style="text-align: right; margin-bottom: 20px;">
+                <button id="generatePdf" class="btn btn-pdf">Guardar como PDF</button>
+            </div>
+            
+            <!-- Sección de Check-Out (Entrega) -->
+            <div class="section checkout-section">
+                <h2>CHECK-OUT / ENTREGA DE EQUIPO</h2>
+                <form id="checkoutForm">
                     <table>
-                        <tr>
-                            <td>Nombre Completo:</td>
-                            <td colspan="3"><input type="text" id="nombre-in" placeholder="Nombre del empleado" required></td>
-                        </tr>
-                        <tr>
-                            <td>Número de Empleado:</td>
-                            <td><input type="number" id="numero-in" placeholder="Número" required></td>
-                            <td>Contacto:</td>
-                            <td><input type="tel" id="contacto-in" placeholder="Teléfono" required></td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Artículo</th>
+                                <th>Entregado</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Camisa</td>
+                                <td><input type="checkbox" id="camisa-out"></td>
+                                <td>
+                                    <select id="camisa-estado-out">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="camisa-obs-out" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Pantalón</td>
+                                <td><input type="checkbox" id="pantalon-out"></td>
+                                <td>
+                                    <select id="pantalon-estado-out">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="pantalon-obs-out" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Gorra</td>
+                                <td><input type="checkbox" id="gorra-out"></td>
+                                <td>
+                                    <select id="gorra-estado-out">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="gorra-obs-out" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Cubrebocas</td>
+                                <td><input type="checkbox" id="cubrebocas-out"></td>
+                                <td>
+                                    <select id="cubrebocas-estado-out">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="cubrebocas-obs-out" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Botas</td>
+                                <td><input type="checkbox" id="botas-out"></td>
+                                <td>
+                                    <select id="botas-estado-out">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="botas-obs-out" placeholder="Observaciones"></td>
+                            </tr>
+                        </tbody>
                     </table>
-                </div>
-                
-                <div class="action-buttons">
-                    <button type="reset" class="btn btn-danger">Limpiar</button>
-                    <button type="submit" class="btn btn-success">Registrar Check-In</button>
-                </div>
-            </form>
+                    
+                    <div class="personal-info">
+                        <h3>Datos del Personal</h3>
+                        <table>
+                            <tr>
+                                <td>Nombre Completo:</td>
+                                <td colspan="3"><input type="text" id="nombre-out" placeholder="Nombre del empleado" required></td>
+                            </tr>
+                            <tr>
+                                <td>Número de Empleado:</td>
+                                <td><input type="number" id="numero-out" placeholder="Número" required></td>
+                                <td>Contacto:</td>
+                                <td><input type="tel" id="contacto-out" placeholder="Teléfono" required></td>
+                            </tr>
+                            <tr>
+                                <td>Dirección:</td>
+                                <td colspan="3"><input type="text" id="direccion-out" placeholder="Dirección" required></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="reset" class="btn btn-danger">Limpiar</button>
+                        <button type="submit" class="btn btn-primary">Registrar Check-Out</button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Sección de Check-In (Devolución) -->
+            <div class="section checkin-section">
+                <h2>CHECK-IN / DEVOLUCIÓN DE EQUIPO</h2>
+                <form id="checkinForm">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Artículo</th>
+                                <th>Devuelto</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Camisa</td>
+                                <td><input type="checkbox" id="camisa-in"></td>
+                                <td>
+                                    <select id="camisa-estado-in">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="camisa-obs-in" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Pantalón</td>
+                                <td><input type="checkbox" id="pantalon-in"></td>
+                                <td>
+                                    <select id="pantalon-estado-in">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="pantalon-obs-in" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Gorra</td>
+                                <td><input type="checkbox" id="gorra-in"></td>
+                                <td>
+                                    <select id="gorra-estado-in">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="gorra-obs-in" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Cubrebocas</td>
+                                <td><input type="checkbox" id="cubrebocas-in"></td>
+                                <td>
+                                    <select id="cubrebocas-estado-in">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="cubrebocas-obs-in" placeholder="Observaciones"></td>
+                            </tr>
+                            <tr>
+                                <td>Botas</td>
+                                <td><input type="checkbox" id="botas-in"></td>
+                                <td>
+                                    <select id="botas-estado-in">
+                                        <option value="bueno">Bueno</option>
+                                        <option value="regular">Regular</option>
+                                        <option value="malo">Malo</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" id="botas-obs-in" placeholder="Observaciones"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="personal-info">
+                        <h3>Datos del Personal</h3>
+                        <table>
+                            <tr>
+                                <td>Nombre Completo:</td>
+                                <td colspan="3"><input type="text" id="nombre-in" placeholder="Nombre del empleado" required></td>
+                            </tr>
+                            <tr>
+                                <td>Número de Empleado:</td>
+                                <td><input type="number" id="numero-in" placeholder="Número" required></td>
+                                <td>Contacto:</td>
+                                <td><input type="tel" id="contacto-in" placeholder="Teléfono" required></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button type="reset" class="btn btn-danger">Limpiar</button>
+                        <button type="submit" class="btn btn-success">Registrar Check-In</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
     <script>
-        // Manejo del formulario de Check-Out
+        // Login System
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if already logged in (for page refresh)
+            if(localStorage.getItem('loggedIn') === 'true') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }
+            
+            // Login Button
+            document.getElementById('loginBtn').addEventListener('click', function() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Simple authentication (replace with your own logic)
+                if(username === 'admin' && password === 'admin123') {
+                    document.getElementById('loginScreen').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    localStorage.setItem('loggedIn', 'true');
+                } else {
+                    document.getElementById('errorMessage').style.display = 'block';
+                }
+            });
+            
+            // Logout Button
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('loggedIn');
+                location.reload();
+            });
+            
+            // PDF Generation
+            document.getElementById('generatePdf').addEventListener('click', function() {
+                const element = document.getElementById('mainContent');
+                const opt = {
+                    margin: 10,
+                    filename: 'control_equipamiento_monsep.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                // Generate PDF
+                html2pdf().from(element).set(opt).save();
+            });
+        });
+
+        // Original form handling code remains the same
         document.getElementById('checkoutForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Recoger datos del formulario
             const empleado = {
                 nombre: document.getElementById('nombre-out').value,
                 numero: document.getElementById('numero-out').value,
@@ -352,17 +482,14 @@
                 tipo: 'checkout'
             };
             
-            // Aquí puedes enviar los datos a un servidor o almacenarlos localmente
             console.log('Datos de Check-Out:', empleado);
             alert('Check-Out registrado correctamente para ' + empleado.nombre);
             this.reset();
         });
         
-        // Manejo del formulario de Check-In
         document.getElementById('checkinForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Recoger datos del formulario
             const empleado = {
                 nombre: document.getElementById('nombre-in').value,
                 numero: document.getElementById('numero-in').value,
@@ -398,7 +525,6 @@
                 tipo: 'checkin'
             };
             
-            // Aquí puedes enviar los datos a un servidor o almacenarlos localmente
             console.log('Datos de Check-In:', empleado);
             alert('Check-In registrado correctamente para ' + empleado.nombre);
             this.reset();
