@@ -1,533 +1,190 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Equipamiento MONSEP</title>
+    <title>Guardiam Lock Seal Design</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-        
-        /* Login Screen Styles */
-        .login-container {
+            font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #2c3e50;
-        }
-        .login-form {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            width: 350px;
-            text-align: center;
-        }
-        .login-form h2 {
-            color: #2c3e50;
-            margin-bottom: 25px;
-        }
-        .login-form input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .login-form button {
-            width: 100%;
-            padding: 12px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-        .login-form button:hover {
-            background-color: #2980b9;
-        }
-        .error-message {
-            color: #e74c3c;
-            margin-top: 10px;
-            display: none;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
         }
         
-        /* Main Content Styles (hidden until login) */
-        .main-content {
-            display: none;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        }
-        h1, h2 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .section {
+        .seal-container {
+            width: 800px; /* Increased from 600px */
+            height: 400px; /* Increased from 280px */
+            position: relative;
             margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
         }
-        .checkout-section {
-            background-color: #f8f9fa;
-        }
-        .checkin-section {
-            background-color: #e9f7ef;
-        }
-        table {
+        
+        .seal {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #3498db;
-            color: white;
-        }
-        input[type="text"], input[type="number"], input[type="tel"], select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        input[type="checkbox"] {
-            transform: scale(1.3);
-        }
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-        .btn-primary {
-            background-color: #3498db;
-            color: white;
-        }
-        .btn-success {
-            background-color: #2ecc71;
-            color: white;
-        }
-        .btn-danger {
-            background-color: #e74c3c;
-            color: white;
-        }
-        .btn-pdf {
-            background-color: #e74c3c;
-            color: white;
-            margin-left: 10px;
-        }
-        .btn:hover {
-            opacity: 0.9;
-        }
-        .action-buttons {
+            height: 100%;
+            border: 12px solid #003366; /* Thicker border */
+            position: relative;
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            padding: 35px; /* Increased padding */
+            box-sizing: border-box;
         }
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            th, td {
-                padding: 8px;
-                font-size: 14px;
-            }
+        
+        .seal-inner {
+            width: 100%;
+            height: 100%;
+            border: 4px dashed #003366; /* Thicker dash */
+            display: flex;
+            position: relative;
+        }
+        
+        .logo-info-container {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 30px; /* Increased padding */
+        }
+        
+        .logo-img {
+            width: 237px; /* Increased by 60% from 148px */
+            height: 237px; /* Increased by 60% from 148px */
+            object-fit: contain;
+            margin-right: 50px; /* Increased margin */
+        }
+        
+        .info-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .registration-number {
+            font-weight: bold;
+            font-size: 34px; /* Increased from 24px */
+            color: #003366;
+            margin-bottom: 18px; /* Increased margin */
+        }
+        
+        .company-name {
+            font-weight: bold;
+            font-size: 42px; /* Increased from 30px */
+            color: #003366;
+            line-height: 1.2;
+        }
+        
+        .corner {
+            position: absolute;
+            width: 70px; /* Larger corners */
+            height: 70px; /* Larger corners */
+            border-color: #003366;
+            border-style: solid;
+        }
+        
+        .top-left {
+            top: 0;
+            left: 0;
+            border-width: 12px 0 0 12px;
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+            border-width: 12px 12px 0 0;
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            border-width: 0 0 12px 12px;
+        }
+        
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            border-width: 0 12px 12px 0;
+        }
+        
+        .export-btn {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+        
+        .export-btn:hover {
+            background-color: #002244;
         }
     </style>
-    <!-- PDF Generation Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
-    <!-- Login Screen -->
-    <div class="login-container" id="loginScreen">
-        <div class="login-form">
-            <h2>Acceso al Sistema</h2>
-            <input type="text" id="username" placeholder="Usuario" required>
-            <input type="password" id="password" placeholder="Contraseña" required>
-            <button id="loginBtn">Ingresar</button>
-            <div class="error-message" id="errorMessage">
-                Usuario o contraseña incorrectos
+    <div class="seal-container" id="seal-to-export">
+        <div class="seal">
+            <div class="seal-inner">
+                <div class="corner top-left"></div>
+                <div class="corner top-right"></div>
+                <div class="corner bottom-left"></div>
+                <div class="corner bottom-right"></div>
+                
+                <div class="logo-info-container">
+                    <!-- Replace this with your actual logo -->
+                    <img src="your-logo.png" alt="Guardiam Lock Logo" class="logo-img">
+                    
+                    <div class="info-text">
+                        <div class="registration-number">GL0180809SBA</div>
+                        <div class="company-name">GUARDIAM LOCK S.A de C.V.</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- Main Content (hidden until login) -->
-    <div class="main-content" id="mainContent">
-        <div class="container">
-            <div style="text-align: right; margin-bottom: 20px;">
-                <button id="logoutBtn" class="btn btn-danger">Cerrar Sesión</button>
-            </div>
-            
-            <h1>MONSEP - Monitoreo y Seguridad Privada</h1>
-            <h2>Control de Equipamiento</h2>
-            
-            <!-- PDF Button -->
-            <div style="text-align: right; margin-bottom: 20px;">
-                <button id="generatePdf" class="btn btn-pdf">Guardar como PDF</button>
-            </div>
-            
-            <!-- Sección de Check-Out (Entrega) -->
-            <div class="section checkout-section">
-                <h2>CHECK-OUT / ENTREGA DE EQUIPO</h2>
-                <form id="checkoutForm">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Artículo</th>
-                                <th>Entregado</th>
-                                <th>Estado</th>
-                                <th>Observaciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Camisa</td>
-                                <td><input type="checkbox" id="camisa-out"></td>
-                                <td>
-                                    <select id="camisa-estado-out">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="camisa-obs-out" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Pantalón</td>
-                                <td><input type="checkbox" id="pantalon-out"></td>
-                                <td>
-                                    <select id="pantalon-estado-out">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pantalon-obs-out" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Gorra</td>
-                                <td><input type="checkbox" id="gorra-out"></td>
-                                <td>
-                                    <select id="gorra-estado-out">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="gorra-obs-out" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Cubrebocas</td>
-                                <td><input type="checkbox" id="cubrebocas-out"></td>
-                                <td>
-                                    <select id="cubrebocas-estado-out">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="cubrebocas-obs-out" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Botas</td>
-                                <td><input type="checkbox" id="botas-out"></td>
-                                <td>
-                                    <select id="botas-estado-out">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="botas-obs-out" placeholder="Observaciones"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="personal-info">
-                        <h3>Datos del Personal</h3>
-                        <table>
-                            <tr>
-                                <td>Nombre Completo:</td>
-                                <td colspan="3"><input type="text" id="nombre-out" placeholder="Nombre del empleado" required></td>
-                            </tr>
-                            <tr>
-                                <td>Número de Empleado:</td>
-                                <td><input type="number" id="numero-out" placeholder="Número" required></td>
-                                <td>Contacto:</td>
-                                <td><input type="tel" id="contacto-out" placeholder="Teléfono" required></td>
-                            </tr>
-                            <tr>
-                                <td>Dirección:</td>
-                                <td colspan="3"><input type="text" id="direccion-out" placeholder="Dirección" required></td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button type="reset" class="btn btn-danger">Limpiar</button>
-                        <button type="submit" class="btn btn-primary">Registrar Check-Out</button>
-                    </div>
-                </form>
-            </div>
-            
-            <!-- Sección de Check-In (Devolución) -->
-            <div class="section checkin-section">
-                <h2>CHECK-IN / DEVOLUCIÓN DE EQUIPO</h2>
-                <form id="checkinForm">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Artículo</th>
-                                <th>Devuelto</th>
-                                <th>Estado</th>
-                                <th>Observaciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Camisa</td>
-                                <td><input type="checkbox" id="camisa-in"></td>
-                                <td>
-                                    <select id="camisa-estado-in">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="camisa-obs-in" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Pantalón</td>
-                                <td><input type="checkbox" id="pantalon-in"></td>
-                                <td>
-                                    <select id="pantalon-estado-in">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="pantalon-obs-in" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Gorra</td>
-                                <td><input type="checkbox" id="gorra-in"></td>
-                                <td>
-                                    <select id="gorra-estado-in">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="gorra-obs-in" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Cubrebocas</td>
-                                <td><input type="checkbox" id="cubrebocas-in"></td>
-                                <td>
-                                    <select id="cubrebocas-estado-in">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="cubrebocas-obs-in" placeholder="Observaciones"></td>
-                            </tr>
-                            <tr>
-                                <td>Botas</td>
-                                <td><input type="checkbox" id="botas-in"></td>
-                                <td>
-                                    <select id="botas-estado-in">
-                                        <option value="bueno">Bueno</option>
-                                        <option value="regular">Regular</option>
-                                        <option value="malo">Malo</option>
-                                    </select>
-                                </td>
-                                <td><input type="text" id="botas-obs-in" placeholder="Observaciones"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    
-                    <div class="personal-info">
-                        <h3>Datos del Personal</h3>
-                        <table>
-                            <tr>
-                                <td>Nombre Completo:</td>
-                                <td colspan="3"><input type="text" id="nombre-in" placeholder="Nombre del empleado" required></td>
-                            </tr>
-                            <tr>
-                                <td>Número de Empleado:</td>
-                                <td><input type="number" id="numero-in" placeholder="Número" required></td>
-                                <td>Contacto:</td>
-                                <td><input type="tel" id="contacto-in" placeholder="Teléfono" required></td>
-                            </tr>
-                        </table>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button type="reset" class="btn btn-danger">Limpiar</button>
-                        <button type="submit" class="btn btn-success">Registrar Check-In</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    <button class="export-btn" id="export-pdf">Export to PDF</button>
 
     <script>
-        // Login System
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check if already logged in (for page refresh)
-            if(localStorage.getItem('loggedIn') === 'true') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-            }
-            
-            // Login Button
-            document.getElementById('loginBtn').addEventListener('click', function() {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                // Simple authentication (replace with your own logic)
-                if(username === 'admin' && password === 'admin123') {
-                    document.getElementById('loginScreen').style.display = 'none';
-                    document.getElementById('mainContent').style.display = 'block';
-                    localStorage.setItem('loggedIn', 'true');
-                } else {
-                    document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('export-pdf').addEventListener('click', function() {
+            const element = document.getElementById('seal-to-export');
+            const opt = {
+                margin: 15,
+                filename: 'Guardiam_Lock_Seal.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 3, /* Higher scale for better quality */
+                    logging: false,
+                    useCORS: true
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait' 
                 }
-            });
-            
-            // Logout Button
-            document.getElementById('logoutBtn').addEventListener('click', function() {
-                localStorage.removeItem('loggedIn');
-                location.reload();
-            });
-            
-            // PDF Generation
-            document.getElementById('generatePdf').addEventListener('click', function() {
-                const element = document.getElementById('mainContent');
-                const opt = {
-                    margin: 10,
-                    filename: 'control_equipamiento_monsep.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-                
-                // Generate PDF
-                html2pdf().from(element).set(opt).save();
-            });
-        });
-
-        // Original form handling code remains the same
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const empleado = {
-                nombre: document.getElementById('nombre-out').value,
-                numero: document.getElementById('numero-out').value,
-                contacto: document.getElementById('contacto-out').value,
-                direccion: document.getElementById('direccion-out').value,
-                equipos: {
-                    camisa: {
-                        entregado: document.getElementById('camisa-out').checked,
-                        estado: document.getElementById('camisa-estado-out').value,
-                        observaciones: document.getElementById('camisa-obs-out').value
-                    },
-                    pantalon: {
-                        entregado: document.getElementById('pantalon-out').checked,
-                        estado: document.getElementById('pantalon-estado-out').value,
-                        observaciones: document.getElementById('pantalon-obs-out').value
-                    },
-                    gorra: {
-                        entregado: document.getElementById('gorra-out').checked,
-                        estado: document.getElementById('gorra-estado-out').value,
-                        observaciones: document.getElementById('gorra-obs-out').value
-                    },
-                    cubrebocas: {
-                        entregado: document.getElementById('cubrebocas-out').checked,
-                        estado: document.getElementById('cubrebocas-estado-out').value,
-                        observaciones: document.getElementById('cubrebocas-obs-out').value
-                    },
-                    botas: {
-                        entregado: document.getElementById('botas-out').checked,
-                        estado: document.getElementById('botas-estado-out').value,
-                        observaciones: document.getElementById('botas-obs-out').value
-                    }
-                },
-                fecha: new Date().toLocaleString(),
-                tipo: 'checkout'
             };
             
-            console.log('Datos de Check-Out:', empleado);
-            alert('Check-Out registrado correctamente para ' + empleado.nombre);
-            this.reset();
-        });
-        
-        document.getElementById('checkinForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            // Show loading feedback
+            const btn = this;
+            btn.textContent = 'Generating PDF...';
+            btn.disabled = true;
             
-            const empleado = {
-                nombre: document.getElementById('nombre-in').value,
-                numero: document.getElementById('numero-in').value,
-                contacto: document.getElementById('contacto-in').value,
-                equipos: {
-                    camisa: {
-                        devuelto: document.getElementById('camisa-in').checked,
-                        estado: document.getElementById('camisa-estado-in').value,
-                        observaciones: document.getElementById('camisa-obs-in').value
-                    },
-                    pantalon: {
-                        devuelto: document.getElementById('pantalon-in').checked,
-                        estado: document.getElementById('pantalon-estado-in').value,
-                        observaciones: document.getElementById('pantalon-obs-in').value
-                    },
-                    gorra: {
-                        devuelto: document.getElementById('gorra-in').checked,
-                        estado: document.getElementById('gorra-estado-in').value,
-                        observaciones: document.getElementById('gorra-obs-in').value
-                    },
-                    cubrebocas: {
-                        devuelto: document.getElementById('cubrebocas-in').checked,
-                        estado: document.getElementById('cubrebocas-estado-in').value,
-                        observaciones: document.getElementById('cubrebocas-obs-in').value
-                    },
-                    botas: {
-                        devuelto: document.getElementById('botas-in').checked,
-                        estado: document.getElementById('botas-estado-in').value,
-                        observaciones: document.getElementById('botas-obs-in').value
-                    }
-                },
-                fecha: new Date().toLocaleString(),
-                tipo: 'checkin'
-            };
-            
-            console.log('Datos de Check-In:', empleado);
-            alert('Check-In registrado correctamente para ' + empleado.nombre);
-            this.reset();
+            // Generate PDF
+            html2pdf().from(element).set(opt).save().then(() => {
+                btn.textContent = 'Export to PDF';
+                btn.disabled = false;
+            }).catch(err => {
+                console.error('PDF generation error:', err);
+                btn.textContent = 'Error - Try Again';
+                btn.disabled = false;
+            });
         });
     </script>
 </body>
